@@ -35,8 +35,8 @@ function dijkstra(pos) {
         // let res =  (pegar_distancias(adj_vetor(pos),pos));
         // disTotal += res[1];
         novo_array(pos,dist);
-        if (array_controle.length == 0) {
-            console.log(dist)
+        if (array_controle.length == 3) {
+            // console.log(dist)
             return;
         }
         loop(posicao_controle[0]);
@@ -66,12 +66,12 @@ function dijkstra(pos) {
         return pos; 
     }
     function novo_array(pos,array_de_distancias) {
-        console.log(pos);
-        let array = (pegar_distancias(adj_vetor(pos),pos));    
+        
+        let array = (pegar_distancias(adj_vetor(pos),pos));    //retorna as adjacencias referentes aquela posição
         let array_final = [];
 
-        array = reorganizar_array(array,array_controle);
-
+        array = reorganizar_array(array,array_controle); //reorganiza o vetor retirando as posicoes já acessadas
+        console.log(array);
         array_de_distancias.forEach(function(element) {
             array.push(element);
         });
