@@ -268,19 +268,20 @@ function escreve_distancia() {
 }
 
 function dijkstra(pos) {
-    let disTotal =0;
+    let disTotal = 0;
     let mantrizFinal = gera_matriz_final();
     let dist = [];//armazena os pontos visitados
     let posicao_controle = [];
     let array_controle = gera_array_de_controle(array);
 
-    console.log(loop(pos));
+    loop(pos);
+    return mantrizFinal;
     function loop(pos) {
         // let res =  (pegar_distancias(adj_vetor(pos),pos));
         // disTotal += res[1];
         
         if (array_controle.length == 1) {
-            console.log(mantrizFinal)
+        
             return;
         }
         novo_array(pos,dist);
@@ -303,9 +304,12 @@ function dijkstra(pos) {
         let menor = 10000;
         let pos;
         vetor.forEach(function(element,key){
-            if (element[1] < menor && verifica_se_ja_foi_acessado(element[0])) {
+            if ((element[1] < menor) && (verifica_se_ja_foi_acessado(element[0])) == true) {
+                
                 menor = element[1];
-                pos = element;
+                pos = element;  
+               
+                
             } 
         });
         return (pos); 
@@ -323,18 +327,21 @@ function dijkstra(pos) {
         });
         
         let min = menor(arrayInside); //console.log(arrayInside)
-        // return;
+        // console.log(min,pos,' ',arrayInside)
+        
         arrayInside.forEach(function(element) {
             if (element[1] != min[1]) {
                 array_final.push(element);
-            }else{
+            }
+            if(element[1] == min[1] && verifica_se_ja_foi_acessado(element[0])){
                 posicao_controle = element;
-                // console.log(posicao_controle)
                 mantrizFinal[element[2]][element[0]]=1;
                 mantrizFinal[element[0]][element[2]]=1;
-            }
+            } 
+            
         });
         
+       
         
         dist = array_final;
     }
@@ -397,6 +404,42 @@ function dijkstra(pos) {
     }
 
 }
+
+function acessa_distancias_dj(vetor,pos,array_de_distancias) {
+    let matriz_controle = cria_matriz(vetor);
+    let distancias = [];
+    let dist = 0;
+    percorre(vetor,pos,dist);
+    return distancias;
+    function percorre(vetor,pos,dist) {
+        vetor[pos].forEach(function(value,key) {
+            if (value == 1 && matriz_controle[key][pos]!=1) {
+                distancias[key] = dist+array_de_distancias[key][pos];
+                adiciona_matriz_controle(key,pos);
+                percorre(vetor,key,distancias[key]);
+            } 
+        });  
+    }
+    function cria_matriz(array) {
+        let mat = [];
+        array.forEach(function(element,key) {
+            let vetor = [];
+            element.forEach(function(value,key2) {
+                vetor.push(0);
+            });
+            mat[key] = vetor;
+        });
+        return mat;
+    }
+
+    function adiciona_matriz_controle(key,key2) {
+        matriz_controle[key][key2] = 1;
+        matriz_controle[key2][key] = 1;
+    }//adiciona os vetores ja conectados na matriz controle
+
+    
+}
+
 function cria_matriz_de_distancias() {
     let matriz = [];
     for (let index = 0; index < array.length; index++) {
@@ -459,10 +502,14 @@ draw_point();
 // percorre();
 escreve_distancia();
 let matriz = cria_matriz_de_distancias();
-dis = preenche_matriz_dis(matriz);
+dis = preenche_matriz_dis(matriz); //distacia de todos os pontos
 
-dijkstra(0);
 
+
+console.log(acessa_distancias_dj(dijkstra(0),1,dis))
+
+// console.log(dijkstra_distancias(1));
+// console.log(dijkstra_distancias(2));
     function busca(params) {
         return document.getElementById('vertices').value;
     }
