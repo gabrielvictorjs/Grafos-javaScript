@@ -13,17 +13,11 @@
     </canvas>
     </div>
 <div style="width: 60%;margin:  0 auto;">
-    <div>
-        <label for="rad">Dirigido</label>
-        <input type="radio" name="rad" value="0">
-        <label for="rad">Nao Dirigido</label>
-        <input type="radio" name="rad" value="1"> 
-    </div>
-    <h3>numero maximo de vertices 6</h3>
-    <label for="vertices">Numero de vertices</label>
+    
+    <h3>escolha o vertice inicial</h3>
     <input type="number" name="vertices" id="vertices">
-    <button type="button" onclick="vertices()">Start</button>
+    <button type="button" onclick="percorre_vetor_fleury()">Start</button>
 </div>
-<script src="js/Graph.js"></script>
+<script src="js/carteiro_chines.js"></script>
 </body>
 </html>

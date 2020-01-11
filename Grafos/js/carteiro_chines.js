@@ -516,7 +516,7 @@ function cria_matriz(array) {
 
 // console.log(dijkstra_distancias(1))
 
-// fleury(array,dis);
+
 
 function fleury(array,dis) {//matriz adijacencia e matriz de caminhos
     let dist = [];
@@ -526,7 +526,7 @@ function fleury(array,dis) {//matriz adijacencia e matriz de caminhos
         dist.push(vetor); 
     });
     
-    distancias(1,dijkstra(0));
+    // distancias(1,dijkstra(0));
     let vetor_distancias = (menor_caminho(vertice_impar(),dist))
     
     // console.log(soma_das_distancias(vetor_distancias,dijkstra(0),array))
@@ -534,21 +534,29 @@ function fleury(array,dis) {//matriz adijacencia e matriz de caminhos
     
     // console.log(calcula_vetor_menor_distancia(vetor_distancias));
     let matriz_distancia_fic = matriz_distancias_aux((calcula_vetor_menor_distancia(vetor_distancias)),array)
-    console.log(exe(5,array));
+    let numero_inicial = document.getElementById('vertices').value;
+    console.log(numero_inicial)
+    return (exe(numero_inicial,array));
     function exe(ponto,array) {
         let matriz = cria_matriz(array);
+        let vetor_fleury = [];
+        let ponto_inicial = ponto;
         percorre(ponto);
+        vetor_fleury.push(ponto);
+        return vetor_fleury;
         function percorre(posicao) {
             array[posicao].forEach(function(element,key){
                     if (element == 1 && matriz[posicao][key]==0) {
                         if (matriz_distancia_fic[posicao][key] == 1) {
                             matriz_distancia_fic[posicao][key] = 0
                             matriz_distancia_fic[key][posicao] = 0
-                            percorre(key);console.log(key)
+                            percorre(key);
+                            vetor_fleury.push(key);
                         }else{
                             matriz[posicao][key]=1;
                             matriz[key][posicao]=1;
-                            percorre(key);console.log(key);
+                            percorre(key);
+                            vetor_fleury.push(key);
                         }
                         
                     }
@@ -801,12 +809,13 @@ function fleury(array,dis) {//matriz adijacencia e matriz de caminhos
 desenho(array,data);
 
 function desenho(array,data) {
-    var c = document.getElementById("canvas");
-    var view = c.getContext("2d");
+    let c = document.getElementById("canvas");
+    let view = c.getContext("2d");
     // console.log(dis)
     desenha_conexoes(array,data)
     desenha_aresta_matriz(data);
-    escreve_distancia(array,data)
+    escreve_distancia(array,data);
+    
     function desenha_aresta_matriz(data) {
         
         data.forEach(function(element,key){
@@ -822,7 +831,7 @@ function desenho(array,data) {
             });
         });
     }
-
+    
     function letras(p,d) {
     
         view.beginPath();
@@ -839,7 +848,7 @@ function desenho(array,data) {
         view.stroke();
     }
     function desenha_arestas(pontox,pontoy,color,number) {
-        view.beginPath();console.log(number)
+        view.beginPath();
         view.beginPath();
         view.arc(pontox, pontoy, 20, 0, 2 * Math.PI);
         view.fillStyle = ''+color+'';
@@ -887,4 +896,42 @@ function desenho(array,data) {
             return logica;
         }
     }
+}
+
+function percorre_vetor_fleury() {
+    let c = document.getElementById("canvas");
+    let view = c.getContext("2d");
+        
+        let vetor = fleury(array,dis)
+            
+    intervalo();
+        function intervalo() {
+            let cont = 0;
+            
+            let start = setInterval(function() {
+                if (cont>0) {
+                    desenha_arestas(data[vetor[cont-1]][0],data[vetor[cont-1]][1],'red',vetor[cont-1])
+                }
+            desenha_arestas(data[vetor[cont]][0],data[vetor[cont]][1],'yellow',vetor[cont])
+            if (cont == vetor.length) {
+                clearInterval(start)
+            }
+            
+            cont+=1;
+            
+            }, 1000);
+        }
+
+        function desenha_arestas(pontox,pontoy,color,number) {
+            view.beginPath();
+            view.beginPath();
+            view.arc(pontox, pontoy, 20, 0, 2 * Math.PI);
+            view.fillStyle = ''+color+'';
+            view.fill();
+            view.beginPath();
+            view.fillStyle = 'black';
+            view.fillText(number, pontox, pontoy);
+        }
+    
+    
 }
