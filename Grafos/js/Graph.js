@@ -463,6 +463,247 @@ function preenche_matriz_dis(matriz) {
     return matriz;
 }
 
+function fleury(array,dis) {//matriz adijacencia e matriz de caminhos
+    let dist = [];
+
+    vertice_impar(array).forEach(element => {
+        // let vetor = dijkstra_distancias(element);
+        let vetor = acessa_distancias_dj(dijkstra(0),element,dis);
+        dist.push(vetor); 
+    });
+    
+    // distancias(1,dijkstra(0));
+    // let vetor_distancias = (menor_caminho(vertice_impar(),dist))
+    // console.log(menor_caminho(vertice_impar(),dist))
+    menor_caminho(vertice_impar(array),dist)
+    return;
+    // console.log(soma_das_distancias(vetor_distancias,dijkstra(0),array))
+    // vetor_distancias = adiciona_distancias_vetor(vetor_distancias,array);
+    
+    // console.log(calcula_vetor_menor_distancia(vetor_distancias));
+
+    function matriz_distancias_aux(vetor,array_para_criar_matriz) {
+        let matriz = cria_matriz(array_para_criar_matriz);
+        matriz.forEach(function(element,key) {
+            matriz.forEach(function(value,key2) {
+                
+            });
+        });
+    }//matriz com as conexoes auxiliares
+
+    function cria_matriz(array) {
+        let mat = [];
+        array.forEach(function(element,key) {
+            let vetor = [];
+            element.forEach(function(value,key2) {
+                vetor.push(0);
+            });
+            mat[key] = vetor;
+        });
+        return mat;
+    }
+    function calcula_vetor_menor_distancia(array) {
+        let tamanho_vetor = (array[0].length)-1; //tamanho da posicao individual do vetor;
+        let menor = 10000;
+        let menor_vetor;
+
+        array.forEach(function(element) {
+            if (element[tamanho_vetor]<menor) {
+                menor_vetor = element;
+                menor = element[tamanho_vetor];
+            }
+        });
+
+        function converte(vetor) {
+            let tamanho = vetor.length -1;
+            let novo_vetor = [];
+            vetor.forEach(function(element,key) {
+                if (key!=tamanho) {
+                    novo_vetor.push(element);
+                }
+            });
+            return novo_vetor;
+        }//retira a distancia do vetor
+        return converte(menor_vetor);
+    }//retorna o vetor que tem menor distancia
+    function adiciona_distancias_vetor(array_vetor_distancias,array) {
+        let matriz = array_vetor_distancias;
+        // console.log(array_vetor_distancias)
+        // return;
+        array_vetor_distancias.forEach(function(element,key) {
+            let distancia = soma_das_distancias(element,dijkstra(0),array)
+            matriz[key].push(distancia);
+        });
+        return matriz;
+    }//adiciona as distancias ao final do vetor e calcula o menor
+
+    function soma_das_distancias(vetor,array,matriz_adjacencia) {
+        //vetor = pontos para calcular a distancia;
+        //array = dijstra;
+        
+        // return;
+        let matriz = cria_matriz(matriz_adjacencia);
+        let distancia_total = 0;
+        percorre_vetor(vetor[0])
+        return distancia_total;
+        function percorre_vetor(pos) {
+            array[pos].forEach(function(element,key) { 
+                    if(element == 1 && key!= pos && verifica_pertence(key) && matriz[pos][key] != 1){   
+                        matriz[pos][key] = 1;
+                        matriz[key][pos] = 1;
+                        let aux = dis[pos][key]+distancia_total;
+                        distancia_total = aux;
+                        percorre_vetor(key);
+                    }
+            });
+        }
+
+        function cria_matriz(array) {
+            let mat = [];
+            
+            array.forEach(function(element,key) {
+                let vetor = [];
+                element.forEach(function(value,key2) {
+                    vetor.push(0);
+                });
+                mat[key] = vetor;
+            });
+            return mat;
+        }
+
+        function verifica_pertence(value) {
+            let logica = false;
+            vetor.forEach(element => {
+                if(element == value){
+                    logica = true;
+                   
+                }
+            });
+            return logica;
+        }
+    }//calcula as distancias de um intervalo de pontos
+    function vertice_impar(array) {
+        let mat = [];
+        array.forEach(function(element,key) {
+            let cont=0;
+            element.forEach(function(value,key2) {
+                if (value == 1 && key != key2) {
+                    cont+=1;
+                }
+            });
+            if (cont % 2 == 1) {
+                mat.push(key);
+            }
+        });
+        return mat;
+    }
+
+    function menor_caminho(caminho,distancias) {
+        let contole = [];
+        let matriz = gerar_matriz();
+        let distancias_dos_caminhos = [];
+        
+        acessa_posicoes();
+       return distancias_dos_caminhos;
+        
+        function menor_distancia_vetor(vetor) {
+            let menor = 10000;
+            let pos = vetor[0].length-1;
+            vetor.forEach(element => {
+                if (element[pos] < menor) {
+                    menor = element;
+                }
+            });
+            return menor;
+        }//pega a menor distancia e retorna o vetor que ela está inserida.
+        function acessa_posicoes() {
+            caminho.forEach(function(element,key){
+                caminho.forEach(function(value,key2){
+                    if (element != value && matriz[key][key2] != 1) {
+                        matriz[key][key2] = 1;
+                        matriz[key2][key] = 1; 
+                        // console.log(key,key2)
+                        
+                        let valor = acessa_posicoes_aux(element,value);
+                        // console.log(val);
+                        let final = [element,value,valor[0],valor[1]]
+                        distancias_dos_caminhos.push(final);
+                        // return [key,key2,distancias[key,key2]];
+                        // console.log(valor[2]+distancias[key][value])
+                    }
+                });
+            });
+        }
+        function acessa_posicoes_aux(chave,chave2) {
+            let controle;
+            caminho.forEach(function(element,key){
+                caminho.forEach(function(value,key2){
+                    if (matriz[key][key2] !=1 && chave != element && chave != value && chave2 != element && chave2 != value && element != value) {
+                        matriz[key][key2] = 1;
+                        matriz[key2][key] = 1;
+                        // console.log(chave,chave2,element,value,distancias[key][value]);
+                        controle = [element,value,distancias[key][value]];
+                        return;
+                    }
+                });
+            });
+            return controle;
+        }
+        function gerar_matriz() {
+            let matriz = [];
+            
+            caminho.forEach(function(element) {
+                let vetor = [];
+                caminho.forEach(element => {
+                    vetor.push(0);
+                });
+                matriz.push(vetor);
+            });
+            return matriz;
+        }
+    }
+    
+    
+
+    function distancias(pos,array) {
+    let vetor_distancia = [];
+    let chaves = [];
+
+    // busca_distancia(pos);
+    console.log(vetor_distancia);
+    function busca_distancia(pos) {
+        
+                valida(pos,0);
+        
+    }
+
+    function valida(pos,total) {
+        // console.log(pos,vetor_distancia)
+        array[pos].forEach(function(element,key) {
+            if (element == 1 && !verifica(key)) {
+                chaves.push(pos);
+                chaves.push(key);
+                let t = dis[pos][key]+total;
+                vetor_distancia[key] = t; 
+                // console.log(vetor_distancia)
+                valida(key,t);
+            }
+        });
+        
+        function verifica(key) {
+            let logica = false;
+            chaves.forEach(function(element) {
+                if (key == element) {
+                    logica = true;
+                }
+            });
+            return logica;
+        }
+        
+    }
+    }
+    
+}
 function vertices() {
     view.clearRect(0, 0, canvas.width, canvas.height);
     if (busca() > 5 || busca() < 0) {
@@ -506,8 +747,8 @@ dis = preenche_matriz_dis(matriz); //distacia de todos os pontos
 
 
 
-console.log(acessa_distancias_dj(dijkstra(0),1,dis))
-
+(acessa_distancias_dj(dijkstra(0),1,dis))
+fleury(array,dis);
 // console.log(dijkstra_distancias(1));
 // console.log(dijkstra_distancias(2));
     function busca(params) {
