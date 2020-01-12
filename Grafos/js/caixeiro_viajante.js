@@ -125,99 +125,74 @@ function newGrafo(vertices) {
 
 
 
-function generateRandom(){
-    let min=1
+function generateRandomPeso(){
+    let min=3
     let max=900
     let random = Math.floor(Math.random() * (+max - +min)) + +min;
     return random
 }
 
-grafo = newGrafo(6)
-grafo.addAresta(0, 0, generateRandom())
-grafo.addAresta(0, 1, generateRandom())
-grafo.addAresta(0, 2, generateRandom())
-grafo.addAresta(0, 3, generateRandom())
-grafo.addAresta(0, 4, generateRandom())
-grafo.addAresta(0, 5, generateRandom())
-grafo.addAresta(0, 6, generateRandom())
-grafo.addAresta(0, 7, generateRandom())
-grafo.addAresta(0, 8, generateRandom())
-grafo.addAresta( 1, 0, generateRandom())
-grafo.addAresta( 1, 1, generateRandom())
-grafo.addAresta( 1, 2, generateRandom())
-grafo.addAresta( 1, 3, generateRandom())
-grafo.addAresta( 1, 4, generateRandom())
-grafo.addAresta( 1, 5, generateRandom())
-grafo.addAresta( 1, 6, generateRandom())
-grafo.addAresta( 1, 7, generateRandom())
-grafo.addAresta( 1, 8, generateRandom())
-grafo.addAresta(2, 0, generateRandom())
-grafo.addAresta(2, 1, generateRandom())
-grafo.addAresta(2, 2, generateRandom())
-grafo.addAresta(2, 3, generateRandom())
-grafo.addAresta(2, 4, generateRandom())
-grafo.addAresta(2, 5, generateRandom())
-grafo.addAresta(2, 6, generateRandom())
-grafo.addAresta(2, 7, generateRandom())
-grafo.addAresta(2, 8, generateRandom())
-grafo.addAresta(3, 0, generateRandom())
-grafo.addAresta(3, 1, generateRandom())
-grafo.addAresta(3, 2, generateRandom())
-grafo.addAresta(3, 3, generateRandom())
-grafo.addAresta(3, 4, generateRandom())
-grafo.addAresta(3, 5, generateRandom())
-grafo.addAresta(3, 6, generateRandom())
-grafo.addAresta(3, 7, generateRandom())
-grafo.addAresta(3, 8, generateRandom())
-grafo.addAresta(4, 0, generateRandom())
-grafo.addAresta(4, 1, generateRandom())
-grafo.addAresta(4, 2, generateRandom())
-grafo.addAresta(4, 3, generateRandom())
-grafo.addAresta(4, 4, generateRandom())
-grafo.addAresta(4, 5, generateRandom())
-grafo.addAresta(4, 6, generateRandom())
-grafo.addAresta(4, 7, generateRandom())
-grafo.addAresta(4, 8, generateRandom())
-grafo.addAresta(5, 0, generateRandom())
-grafo.addAresta(5, 1, generateRandom())
-grafo.addAresta(5, 2, generateRandom())
-grafo.addAresta(5, 3, generateRandom())
-grafo.addAresta(5, 4, generateRandom())
-grafo.addAresta(5, 5, generateRandom())
-grafo.addAresta(5, 6, generateRandom())
-grafo.addAresta(5, 7, generateRandom())
-grafo.addAresta(5, 8, generateRandom())
-grafo.addAresta(6, 0, generateRandom())
-grafo.addAresta(6, 1, generateRandom())
-grafo.addAresta(6, 2, generateRandom())
-grafo.addAresta(6, 3, generateRandom())
-grafo.addAresta(6, 4, generateRandom())
-grafo.addAresta(6, 5, generateRandom())
-grafo.addAresta(6, 6, generateRandom())
-grafo.addAresta(6, 7, generateRandom())
-grafo.addAresta(6, 8, generateRandom())
-grafo.addAresta(7, 0, generateRandom())
-grafo.addAresta(7, 1, generateRandom())
-grafo.addAresta(7, 2, generateRandom())
-grafo.addAresta(7, 3, generateRandom())
-grafo.addAresta(7, 4, generateRandom())
-grafo.addAresta(7, 5, generateRandom())
-grafo.addAresta(7, 6, generateRandom())
-grafo.addAresta(7, 7, generateRandom())
-grafo.addAresta(7, 8, generateRandom())
-grafo.addAresta(8, 0, generateRandom())
-grafo.addAresta(8, 1, generateRandom())
-grafo.addAresta(8, 2, generateRandom())
-grafo.addAresta(8, 3, generateRandom())
-grafo.addAresta(8, 4, generateRandom())
-grafo.addAresta(8, 5, generateRandom())
-grafo.addAresta(8, 6, generateRandom())
-grafo.addAresta(8, 7, generateRandom())
-grafo.addAresta(8, 8, generateRandom())
+function generateRandomVertice(){
+    let min=3
+    let max=6
+    let random = Math.floor(Math.random() * (+max - +min)) + +min;
+    return random
+}
+
+function generateRandomVerticeInicial(){
+    let min=0
+    let max=4
+    let random = Math.floor(Math.random() * (+max - +min)) + +min;
+    return random
+}
+let quantVertices = generateRandomVertice() //quantidades de vértices do grafo
+grafo = newGrafo(quantVertices)
+grafo.addAresta(0, 1, generateRandomPeso())
+grafo.addAresta(0, 2, generateRandomPeso())
+grafo.addAresta(0, 3, generateRandomPeso())
+grafo.addAresta(0, 4, generateRandomPeso())
+grafo.addAresta(0, 5, generateRandomPeso())
+grafo.addAresta( 1, 0, generateRandomPeso())
+grafo.addAresta( 1, 2, generateRandomPeso())
+grafo.addAresta( 1, 3, generateRandomPeso())
+grafo.addAresta( 1, 4, generateRandomPeso())
+grafo.addAresta( 1, 5, generateRandomPeso())
+grafo.addAresta(2, 0, generateRandomPeso())
+grafo.addAresta(2, 1, generateRandomPeso())
+grafo.addAresta(2, 3, generateRandomPeso())
+grafo.addAresta(2, 4, generateRandomPeso())
+grafo.addAresta(2, 5, generateRandomPeso())
+grafo.addAresta(3, 0, generateRandomPeso())
+grafo.addAresta(3, 1, generateRandomPeso())
+grafo.addAresta(3, 2, generateRandomPeso())
+grafo.addAresta(3, 4, generateRandomPeso())
+grafo.addAresta(3, 5, generateRandomPeso())
+grafo.addAresta(4, 0, generateRandomPeso())
+grafo.addAresta(4, 1, generateRandomPeso())
+grafo.addAresta(4, 2, generateRandomPeso())
+grafo.addAresta(4, 3, generateRandomPeso())
+grafo.addAresta(4, 5, generateRandomPeso())
+grafo.addAresta(5, 0, generateRandomPeso())
+grafo.addAresta(5, 1, generateRandomPeso())
+grafo.addAresta(5, 2, generateRandomPeso())
+grafo.addAresta(5, 3, generateRandomPeso())
+grafo.addAresta(5, 4, generateRandomPeso())
+
 grafo.printMatriz()
 
 grafo.printGrafo()
 console.log("\n");
-
-console.log("Total percorrido pelo caixeiro Viajante: " + grafo.calculaCaminhoCaixeiro(grafo,2))
+let vi = generateRandomVerticeInicial() // vértice inicial
+while(vi > quantVertices - 1){
+    vi = generateRandomVerticeInicial()
+}
+console.log(`Vertice inicial: ${vi} Quantidade vertices: ${quantVertices}`)
+console.log("Total percorrido pelo caixeiro Viajante: " + grafo.calculaCaminhoCaixeiro(grafo,vi))
 grafo.caminhoPercorrido()
+
+/* 
+As funções random irão calcular automaticamente os pesos, o vértice inicial e a
+quantidade de vértices
+o atributo (grafo.verticesVisitadosCaixeiro) retorna um array com a sequência de vértices visitados
+o atributo (grafo.pesoCaixeiroViajante) retorna o valor percorrido pelo caixeiro viajante
+*/
