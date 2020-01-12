@@ -535,7 +535,7 @@ function fleury(array,dis) {//matriz adijacencia e matriz de caminhos
     // console.log(calcula_vetor_menor_distancia(vetor_distancias));
     let matriz_distancia_fic = matriz_distancias_aux((calcula_vetor_menor_distancia(vetor_distancias)),array)
     let numero_inicial = document.getElementById('vertices').value;
-    console.log(numero_inicial)
+    numero_inicial = parseInt(numero_inicial);
     return (exe(numero_inicial,array));
     function exe(ponto,array) {
         let matriz = cria_matriz(array);
@@ -899,19 +899,25 @@ function desenho(array,data) {
 }
 
 function percorre_vetor_fleury() {
+    
     let c = document.getElementById("canvas");
     let view = c.getContext("2d");
         
         let vetor = fleury(array,dis)
-            
+            console.log(vetor)
+        // return;
     intervalo();
         function intervalo() {
             let cont = 0;
-            
+            let aux;
             let start = setInterval(function() {
+                if (aux) {
+                    line_conexao(aux,data[vetor[cont]],'red')
+                }
                 if (cont>0) {
                     desenha_arestas(data[vetor[cont-1]][0],data[vetor[cont-1]][1],'red',vetor[cont-1])
                 }
+                aux = data[vetor[cont]];
             desenha_arestas(data[vetor[cont]][0],data[vetor[cont]][1],'yellow',vetor[cont])
             if (cont == vetor.length) {
                 clearInterval(start)
@@ -932,6 +938,14 @@ function percorre_vetor_fleury() {
             view.fillStyle = 'black';
             view.fillText(number, pontox, pontoy);
         }
-    
+        function line_conexao(p1,p2,color) {
+            // console.log('p1 '+p1)
+            view.beginPath();
+            view.lineWidth = 4;
+            view.moveTo(p1[0],p1[1]);
+            view.lineTo(p2[0],p2[1]);
+            view.strokeStyle = ''+color+'';
+            view.stroke();
+        }
     
 }
