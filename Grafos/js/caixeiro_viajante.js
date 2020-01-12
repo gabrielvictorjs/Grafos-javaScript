@@ -127,7 +127,7 @@ function newGrafo(vertices) {
 
 function generateRandomPeso(){
     let min=3
-    let max=900
+    let max=10
     let random = Math.floor(Math.random() * (+max - +min)) + +min;
     return random
 }
