@@ -189,10 +189,195 @@ while(vi > quantVertices - 1){
 console.log(`Vertice inicial: ${vi} Quantidade vertices: ${quantVertices}`)
 console.log("Total percorrido pelo caixeiro Viajante: " + grafo.calculaCaminhoCaixeiro(grafo,vi))
 grafo.caminhoPercorrido()
-
+// console.log(grafo.verticeInicial)
 /* 
 As funções random irão calcular automaticamente os pesos, o vértice inicial e a
 quantidade de vértices
 o atributo (grafo.verticesVisitadosCaixeiro) retorna um array com a sequência de vértices visitados
 o atributo (grafo.pesoCaixeiroViajante) retorna o valor percorrido pelo caixeiro viajante
 */
+var par_ordenado_global;
+
+document.getElementById('vertice_inicial').innerHTML = grafo.verticeInicial;
+document.getElementById('distancia_total').innerHTML = grafo.pesoCaixeiroViajante;
+
+desenho(grafo.matrizAdjacencia);
+
+function desenho(matrizAdjacencia,) {
+    
+    let c = document.getElementById("canvas");
+    let view = c.getContext("2d");
+    let data = gera_pontos(matrizAdjacencia);
+    par_rodenado_global = data;
+    let array = gera_array(matrizAdjacencia);
+    // console.log(data)
+    // return;
+   
+    desenha_conexoes(array,data)
+    desenha_aresta_matriz(data);
+    escreve_distancia(array,data,matrizAdjacencia);
+    
+    function gera_array(matrizAdjacencia) {
+        let data = [];
+        matrizAdjacencia.forEach(function(element,key) {
+            let vetor = [];
+            element.forEach(function(value,key2){
+                (value != 0)? vetor.push(1):vetor.push(0);
+            });
+            data.push(vetor);
+        });
+        return data;
+    }
+    function gera_pontos(matrizAdjacencia){
+        let data = [];
+        
+        matrizAdjacencia.forEach(function(element,key) {
+            
+            data.push(ran());
+        });
+
+        return data;
+        
+        function ran() {
+            return [Math.round(Math.random()*800)+100,Math.round(Math.random()*200)+50];
+        }
+    }
+
+    function desenha_aresta_matriz(data) {
+        
+        data.forEach(function(element,key){
+                    desenha_arestas(element[0],element[1],'red',key);
+        });
+    } 
+    function desenha_conexoes(array,data){
+        array.forEach(function(element,key) {
+            element.forEach(function(value,key2){
+                if (value == 1) {
+                    line(data[key],data[key2])
+                }
+            });
+        });
+    }
+    
+    function letras(p,d,color) {
+    
+        view.beginPath();
+        view.fillStyle = ''+color+'';
+        view.font = "12px Georgia";
+        view.fillText(Math.round(d), p[0], p[1]); 
+        
+    }
+    function line(p1,p2) {
+        // console.log('p1 '+p1)
+        view.beginPath();
+        view.moveTo(p1[0],p1[1]);
+        view.lineTo(p2[0],p2[1]);
+        view.stroke();
+    }
+    function desenha_arestas(pontox,pontoy,color,number) {
+        view.beginPath();
+        view.beginPath();
+        view.arc(pontox, pontoy, 20, 0, 2 * Math.PI);
+        view.fillStyle = ''+color+'';
+        view.fill();
+        view.beginPath();
+        view.fillStyle = 'white';
+        view.fillText(number, pontox, pontoy);
+    }
+    function escreve_distancia(array,data,dis) {
+        let dados = [];
+        let chavePrimaria = [];
+    
+        // console.log(array[0][0])
+        array.forEach(function(element,key){
+            element.forEach(function(value,key2){//console.log(percorre_vetor(dados,key))
+                // console.log(chavePrimaria,key)
+                    if(!percorre_vetor(chavePrimaria,key)){
+                        // console.log('aaaaaaaaaaaaaa')
+                        chavePrimaria.push(key);
+                    }
+                    if (!percorre_vetor(dados,key2)) { 
+                        dados.push(key2);
+                        
+                    }
+                    if (!percorre_vetor(chavePrimaria,key2) && (array[key][key2]==1 || array[key2][key] == 1)) {
+                            let d = dis[key][key2];
+                            letras(ponto_medio(data[key],data[key2]),d,'black');
+                        }
+               
+            });
+        });
+    
+        function ponto_medio(p1,p2) {
+            return [(p2[0] + p1[0])/2,(p2[1]+p1[1])/2];
+        }
+    
+        // console.log(data);
+        function percorre_vetor(data,chave) {
+            let logica = false;
+            data.forEach(function (element2) {
+                if(element2 == chave){
+                    logica = true;
+                }
+            });
+            return logica;
+        }
+    }
+}
+
+function percorre_grafo() {
+
+    let c = document.getElementById("canvas");
+    let view = c.getContext("2d");
+    let data = par_rodenado_global;
+    let vetor = grafo.verticesVisitadosCaixeiro;
+    vetor.push(grafo.verticeInicial)
+            // console.log(data);
+        // return;
+    intervalo();
+        function intervalo() {
+            let cont = 0;
+            let aux;
+            let start = setInterval(function() {
+                if (aux) {
+                    line_conexao(aux,data[vetor[cont]],'red')
+                }
+                if (cont>0) {
+                    desenha_arestas(data[vetor[cont-1]][0],data[vetor[cont-1]][1],'red',vetor[cont-1])
+                }
+                aux = data[vetor[cont]];
+            desenha_arestas(data[vetor[cont]][0],data[vetor[cont]][1],'yellow',vetor[cont])
+            if (cont == vetor.length) {
+                clearInterval(start)
+            }
+            
+            cont+=1;
+            
+            }, 1000);
+        }
+
+        function desenha_arestas(pontox,pontoy,color,number) {
+            view.beginPath();
+            view.beginPath();
+            view.arc(pontox, pontoy, 20, 0, 2 * Math.PI);
+            view.fillStyle = ''+color+'';
+            view.fill();
+            view.beginPath();
+            view.fillStyle = 'black';
+            view.fillText(number, pontox, pontoy);
+        }
+        function line_conexao(p1,p2,color) {
+            // console.log('p1 '+p1)
+            view.beginPath();
+            view.lineWidth = 4;
+            view.moveTo(p1[0],p1[1]);
+            view.lineTo(p2[0],p2[1]);
+            view.strokeStyle = ''+color+'';
+            view.stroke();
+        }
+        
+}
+
+function resetar() {
+    window.location.reload()
+}
